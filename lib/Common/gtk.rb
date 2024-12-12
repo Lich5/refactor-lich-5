@@ -22,15 +22,8 @@ module Lich
         define_deprecated_const(:Tooltips, nil)
 
         Gtk::ComboBox.class_eval do
-          def append_text(text)
+          def append_text(_text)
             respond "'Gtk::ComboBox#append_text' is deprecated; use 'Gtk::ComboBoxText#append_text' instead"
-          end
-        end
-
-        class Gtk::ComboBoxEntry < Gtk::ComboBoxText
-          def initialize()
-            respond "'Gtk::ComboBoxEntry' is deprecated; use 'Gtk::ComboBoxText(:entry => true)' instead"
-            super(:entry => true)
           end
         end
 
@@ -55,7 +48,7 @@ module Lich
         end
 
         Gtk::Notebook.class_eval do
-          def set_tab_border(border)
+          def set_tab_border(_border)
             respond "'Gtk::Notebook:set_tab_border()' is deprecated; fix me"
             # noop
             return self
@@ -69,20 +62,6 @@ module Lich
               active = false
             end
             parent.set_active(active)
-            return self
-          end
-        end
-
-        class Gtk::Tooltips < Gtk::Tooltip
-          def enable
-            respond "'Gtk::Tooltips#enable' is deprecated; use 'Gtk::Tooltip' API instead"
-            # noop
-            return self
-          end
-
-          def set_tip(one = nil, two = nil, three = nil)
-            respond "'Gtk::Tooltips#set_tip' is deprecated; use 'Gtk::Tooltip' API instead"
-            # noop
             return self
           end
         end
@@ -101,7 +80,7 @@ module Lich
           GLib::Timeout.add(1) {
             begin
               block.call
-            rescue
+            rescue StandardError
               respond "error in Gtk.queue: #{$!}"
               puts "error in Gtk.queue: #{$!}\n\t#{$!.backtrace.join("\n\t")}"
               Lich.log "error in Gtk.queue: #{$!}\n\t#{$!.backtrace.join("\n\t")}"
@@ -121,14 +100,6 @@ module Lich
               puts "error in Gtk.queue: #{$!}\n\t#{$!.backtrace.join("\n\t")}"
               Lich.log "error in Gtk.queue: #{$!}\n\t#{$!.backtrace.join("\n\t")}"
             rescue SystemStackError
-              respond "error in Gtk.queue: #{$!}"
-              puts "error in Gtk.queue: #{$!}\n\t#{$!.backtrace.join("\n\t")}"
-              Lich.log "error in Gtk.queue: #{$!}\n\t#{$!.backtrace.join("\n\t")}"
-            rescue Exception
-              respond "error in Gtk.queue: #{$!}"
-              puts "error in Gtk.queue: #{$!}\n\t#{$!.backtrace.join("\n\t")}"
-              Lich.log "error in Gtk.queue: #{$!}\n\t#{$!.backtrace.join("\n\t")}"
-            rescue ScriptError
               respond "error in Gtk.queue: #{$!}"
               puts "error in Gtk.queue: #{$!}\n\t#{$!.backtrace.join("\n\t")}"
               Lich.log "error in Gtk.queue: #{$!}\n\t#{$!.backtrace.join("\n\t")}"
