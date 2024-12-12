@@ -273,7 +273,7 @@ else
   add_character_pane.add1(add_char_label)
   add_character_pane.pack2(add_char_entry)
 
-  add_inst_select = Gtk::ComboBoxEntry.new()
+  add_inst_select = Gtk::ComboBoxText.new(:entry => true) # Gtk::ComboBoxEntry.new()
   add_inst_select.child.text = "Prime"
   add_inst_select.append_text("Prime")
   add_inst_select.append_text("Platinum")
